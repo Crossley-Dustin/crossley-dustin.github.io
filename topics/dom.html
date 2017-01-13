@@ -6,19 +6,18 @@
     </head>
     <body>
         <main>
-        <p>Click the button to make a BUTTON element.</p>
+            <p>Click the button to make a BUTTON element.</p>
+            <button onclick="btnFunction()" text="Create Another Button">Try it</button>
 
-        <button onclick="myFunction()">Try it</button>
-
-        <script>
-        function myFunction() {
-            var btn = document.createElement("BUTTON");
-            document.body.appendChild(btn);
-        }
-        </script>
+            <p></p>
 
             <footer>
-                
+                <script>
+                function btnFunction() {
+                    var btn = document.createElement("BUTTON");
+                    document.body.appendChild(btn);
+                }
+                </script>
             </footer>       
         </main>
     </body>
