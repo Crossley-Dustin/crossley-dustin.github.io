@@ -28,10 +28,18 @@
                 </script>
                 <script>
                 function pickaNumber() {
-                var maximum = 10;
+                var user_guess = document.getElementById("user_guess").value;
+				console.log(user_guess.trim());
+				console.log(user_guess.trim() == "");
+				if (user_guess.trim() == "" | isNaN(user_guess)) {
+					result = "Please enter a number";
+					document.getElementById("answer").innerHTML = result;
+					return;
+				}
+				var maximum = 10;
                 var minimum = 1;
                 var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
-                var user_guess = document.getElementById("user_guess").value;
+
                 var result;
                 if (parseInt(user_guess) == parseInt(randomnumber)) {
                     result = "You're absolutely correct! My number was " + randomnumber;
