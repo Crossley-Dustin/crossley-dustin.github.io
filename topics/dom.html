@@ -6,24 +6,24 @@
     </head>
     <body>
         <main>
-            <h1>Example 1</h1>
-            <p>Click the button to make a BUTTON element.</p>
-            <button onclick="btnFunction()">Create Another Button</button>
+			<section id="section1">
+				<h1>Example 1</h1>
+				<p>Click the button to make a BUTTON element.</p>
+				<button onclick="btnFunction()">Create Another Button</button>
+			</section>
+            <section id="section2">
+				<h1>Example 2</h1>
+				Guess a number between 1 and 10: <input type="text" id="user_guess">
+				<p id="answer"></p>
+				<button onclick="pickaNumber()">Try it</button>
+			</section>
 
-            <h1>Example 2</h1>
-            Guess a number between 1 and 10: <input type="text" id="user_guess">
-            <p id="answer"></p>
-            <button onclick="pickaNumber()">Try it</button>
-
-
-
-            <footer>
                 <script>
                 function btnFunction() {
                     var btn = document.createElement("BUTTON");
                     var t = document.createTextNode("Hi! I'm a New Button!");
                     btn.appendChild(t);
-                    document.body.appendChild(btn);
+                    document.getElementById("section1").appendChild(btn);
                 }
                 </script>
                 <script>
@@ -31,7 +31,7 @@
                 var maximum = 10;
                 var minimum = 1;
                 var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
-                var user_guess = document.getElementById("user_guess");
+                var user_guess = document.getElementById("user_guess").value;
                 var result;
                 if (parseInt(user_guess) == parseInt(randomnumber)) {
                     result = "You're absolutely correct! My number was " + randomnumber;
@@ -41,7 +41,7 @@
                 document.getElementById("answer").innerHTML = result;
             }
             </script>
-            </footer>       
+    
         </main>
     </body>
 
