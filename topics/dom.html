@@ -17,40 +17,71 @@
 				<p id="answer"></p>
 				<button onclick="pickaNumber()">Try it</button>
 			</section>
+			<section id="section3">
+				<h1>Example 3</h1>
+				<button onclick="listAllBody()">List all body elements</button>
+			</section>
 
                 <script>
                 function btnFunction() {
+					// create a new button with some text on it
                     var btn = document.createElement("BUTTON");
                     var t = document.createTextNode("Hi! I'm a New Button!");
                     btn.appendChild(t);
+					// add the button to the end of section1
                     document.getElementById("section1").appendChild(btn);
                 }
-                </script>
-                <script>
-                function pickaNumber() {
-                var user_guess = document.getElementById("user_guess").value;
-				console.log(user_guess.trim());
-				console.log(user_guess.trim() == "");
-				if (user_guess.trim() == "" | isNaN(user_guess)) {
-					result = "Please enter a number";
-					document.getElementById("answer").innerHTML = result;
-					return;
-				}
-				var maximum = 10;
-                var minimum = 1;
-                var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
 
-                var result;
-                if (parseInt(user_guess) == parseInt(randomnumber)) {
-                    result = "You're absolutely correct! My number was " + randomnumber;
-                } else {
-                    result = "Sorry, my number was " + randomnumber;
-                }
-                document.getElementById("answer").innerHTML = result;
-            }
+                function pickaNumber() {
+					// retrieve the user's guess from the text box
+					var user_guess = document.getElementById("user_guess").value;
+					// see if they entered a number
+					if (user_guess.trim() == "" | isNaN(user_guess)) {
+						result = "Please enter a number";
+						document.getElementById("answer").innerHTML = result;
+						return;
+					}
+					// set our random number limits
+					var maximum = 10;
+					var minimum = 1;
+					// do some math to get a whole number between our limits
+					var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+					// check the guess against the random number
+					var result;
+					if (parseInt(user_guess) == parseInt(randomnumber)) {
+						result = "You're absolutely correct! My number was " + randomnumber;
+					} else {
+						result = "Sorry, my number was " + randomnumber;
+					}
+					// show the results to the user
+					document.getElementById("answer").innerHTML = result;
+				}
+			
+				function listAllBody() {
+					// create a div container to hold the list
+					var newDiv = document.createElement("div");
+					newDiv.id = "bodyList";
+					// create a new unordered list
+					var newList = document.createElement("ul");
+					// get a nodelist of all elements in the body 
+					var AllEls = document.body.querySelectorAll('*');
+					// loop through the query result
+					for (var i = 0; i < AllEls.length; i++) {
+						// create a new list item
+						var newListItem = document.createElement("li");
+						newListItem.appendChild(document.createTextNode(AllEls[i].localName + ", id: " + AllEls[i].id));
+						newListItem.setAttribute("id", "listItem" + i);
+						// add the list item to the unordered list
+						newList.appendChild(newListItem);
+						
+						console.log(AllEls[i].localName);
+					}
+					// add the created div to the end of section3
+					document.getElementById("section3").appendChild(newDiv);
+					// add the created unordered list to the end of the new div
+					document.getElementById("bodyList").appendChild(newList);
+				}
             </script>
-    
         </main>
     </body>
-
 </html>
