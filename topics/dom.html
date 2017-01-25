@@ -56,14 +56,14 @@
 					// show the results to the user
 					document.getElementById("answer").innerHTML = result;
 				}
-			
+
 				function listAllBody() {
 					// create a div container to hold the list
 					var newDiv = document.createElement("div");
 					newDiv.id = "bodyList";
 					// create a new unordered list
 					var newList = document.createElement("ul");
-					// get a nodelist of all elements in the body 
+					// get a nodelist of all elements in the body
 					var AllEls = document.body.querySelectorAll('*');
 					// loop through the query result
 					for (var i = 0; i < AllEls.length; i++) {
@@ -73,7 +73,7 @@
 						newListItem.setAttribute("id", "listItem" + i);
 						// add the list item to the unordered list
 						newList.appendChild(newListItem);
-						
+
 						console.log(AllEls[i].localName);
 					}
 					// add the created div to the end of section3
