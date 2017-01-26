@@ -3,10 +3,63 @@
     <head>
         <meta charset="UTF-8">
         <title>Dustin's CSS3 Manipulation with JavaSCript</title>
+        <link rel="stylesheet" type="text/css" href="topic_css/topic_layout.css">
     </head>
     <body>
         <main>
             <h2>Let's change some CSS dynamically!</h2>
+            <section>
+                <button onclick="showBlueBox()">Show the blue box</button>
+                <button onclick="makeBoxBig()">Make the box bigger</button>
+                <!-- <button onclick="addBoxBorder()">Add a box border</button> -->
+                <button onclick="roundTheBox()">Make it purty</button>
+                <div class="blue">Hi! I'm blue
+                </div>
+                <div class="blue">Hi! I'm blue too
+                </div>
+                <div class="blue">Hi! I'm blue three
+                </div>
+                <div class="green">Hi! I'm just green
+                </div>
+            </section>
         </main>
+        <script type="text/javascript">
+            function showBlueBox(){
+                var elist = document.getElementsByClassName("blue")
+                for(var i = 0; i < elist.length; i++) {
+                    elist[i].style.border = "medium solid blue";
+                    elist[i].style.color = "blue";
+                }
+            }
+            function makeBoxBig(){
+                var elist = document.getElementsByClassName("blue")
+                for(var i = 0; i < elist.length; i++) {
+                    elist[i].style.textTransform = "uppercase";
+                    elist[i].style.fontSize = "700%";
+                }
+            }
+            function addBoxBorder(){
+                var elist = document.getElementsByClassName("blue")
+                for(var i = 0; i < elist.length; i++) {
+
+                }
+            }
+            function roundTheBox(){
+                var elist = document.getElementsByClassName("blue")
+                for(var i = 0; i < elist.length; i++) {
+                    elist[i].style.borderRadius = "25px"
+                    elist[i].style.width = "60%";
+                    elist[i].style.textAlign = "center";
+                    elist[i].style.margin = "10px";
+                }
+                var elist = document.getElementsByClassName("green")
+                for(var i = 0; i < elist.length; i++) {
+                    elist[i].innerHTML += " - It's not easy being green";
+                    elist[i].style.border = "thin solid green";
+                    elist[i].style.margin = "10px";
+                    elist[i].style.width = "30%";
+                }
+            }
+        </script>
     </body>
 </html>
