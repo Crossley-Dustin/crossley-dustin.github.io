@@ -13,6 +13,8 @@
                 <button onclick="makeBoxBig()">Make the box bigger</button>
                 <!-- <button onclick="addBoxBorder()">Add a box border</button> -->
                 <button onclick="roundTheBox()">Make it purty</button>
+                <button onclick="readJsonFile('bin/quotes.json')">Replace text with quotes in a JSON file</button>
+                <button onclick="addStyle()">Add style tag to Header</button>
                 <div class="blue" id="quote1"><p>Hi! I'm blue</p>
                 </div>
                 <div class="blue" id="quote2"><p>Hi! I'm blue too</p>
@@ -21,9 +23,6 @@
                 </div>
                 <div class="green"><p>Hi! I'm just green</p>
                 </div>
-            </section>
-            <section id="section2">
-                <button onclick="readJsonFile('bin/quotes.json')">Replace text with quotes in a JSON file</button>
             </section>
         </main>
         <script type="text/javascript">
@@ -41,25 +40,19 @@
                     elist[i].style.fontSize = "700%";
                 }
             }
-            function addBoxBorder(){
-                var elist = document.getElementsByClassName("blue")
-                for(var i = 0; i < elist.length; i++) {
-
-                }
-            }
             function roundTheBox(){
                 var elist = document.getElementsByClassName("blue")
                 for(var i = 0; i < elist.length; i++) {
-                    elist[i].style.borderRadius = "25px"
+                    elist[i].style.borderRadius = "100px"
                     elist[i].style.width = "60%";
                     elist[i].style.textAlign = "center";
-                    elist[i].style.margin = "10px";
+                    elist[i].style.margin = "2px";
                 }
                 var elist = document.getElementsByClassName("green")
                 for(var i = 0; i < elist.length; i++) {
                     elist[i].innerHTML += " - It's not easy being green";
                     elist[i].style.border = "thin solid green";
-                    elist[i].style.margin = "10px";
+                    elist[i].style.margin = "2px";
                     elist[i].style.width = "30%";
                 }
             }
@@ -83,9 +76,19 @@
                 var newp = document.createElement("p");
                 newp.style.border = "medium solid purple"
                 newp.style.color = "purple";
-                newp.innerHTML = objQuotes.famous;
+                var pQuote = document.createTextNode(objQuotes.famous);
+                newp.appendChild(pQuote);
                 newDiv.appendChild(newp);
                 document.getElementById("section1").appendChild(newDiv);
+            }
+            function addStyle(){
+                var styleNode = document.createElement("style");
+                styleNode.type = "text/css";
+                var styleBlue = document.createTextNode(".blue { border: medium solid blue; margin: 10px; width: 75%; text-align: center; font-size: 300%; text-transform: initial; border-radius: 25px 12px}");
+                var styleGreen = document.createTextNode(".green { border: medium solid green; margin: 10px; width: 75%; text-align: center; font-size: 300%; text-transform: initial; border-radius: 25px 12px}");
+                styleNode.appendChild(styleBlue);
+                styleNode.appendChild(styleGreen);
+                document.head.appendChild(style);
             }
         </script>
     </body>
