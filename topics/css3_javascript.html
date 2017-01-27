@@ -8,19 +8,22 @@
     <body>
         <main>
             <h2>Let's change some CSS dynamically!</h2>
-            <section>
+            <section id="section1">
                 <button onclick="showBlueBox()">Show the blue box</button>
                 <button onclick="makeBoxBig()">Make the box bigger</button>
                 <!-- <button onclick="addBoxBorder()">Add a box border</button> -->
                 <button onclick="roundTheBox()">Make it purty</button>
-                <div class="blue">Hi! I'm blue
+                <div class="blue" id="quote1"><p>Hi! I'm blue</p>
                 </div>
-                <div class="blue">Hi! I'm blue too
+                <div class="blue" id="quote2"><p>Hi! I'm blue too</p>
                 </div>
-                <div class="blue">Hi! I'm blue three
+                <div class="blue" id="quote3"><p>Hi! I'm blue three</p>
                 </div>
-                <div class="green">Hi! I'm just green
+                <div class="green"><p>Hi! I'm just green</p>
                 </div>
+            </section>
+            <section id="section2">
+                <button onclick="readJsonFile('bin/quotes.json')">Replace text with quotes in a JSON file</button>
             </section>
         </main>
         <script type="text/javascript">
@@ -59,6 +62,30 @@
                     elist[i].style.margin = "10px";
                     elist[i].style.width = "30%";
                 }
+            }
+            function readJsonFile(fileURL){
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        parseQuotes(xhr.responseText);
+                    }
+                }
+                xhr.open("GET",fileURL,true);
+                xhr.send();
+            }
+            function parseQuotes(response){
+                var objQuotes = JSON.parse(response);
+                document.getElementById("quote1").firstChild.innerHTML = objQuotes.sports;
+                document.getElementById("quote2").firstChild.innerHTML = objQuotes.fantasy;
+                document.getElementById("quote3").firstChild.innerHTML = objQuotes.roads;
+                var newDiv = document.createElement("div");
+                newDiv.class = "blue";
+                var newp = document.createElement("p");
+                newp.style.border = "medium solid purple"
+                newp.style.color = "purple";
+                newp.innerHTML = objQuotes.famous;
+                newDiv.appendChild(newp);
+                document.getElementById("section1").appendChild(newDiv);
             }
         </script>
     </body>
