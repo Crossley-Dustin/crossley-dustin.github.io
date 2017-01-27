@@ -50,7 +50,7 @@
                 }
                 var elist = document.getElementsByClassName("green")
                 for(var i = 0; i < elist.length; i++) {
-                    elist[i].innerHTML += " - It's not easy being green";
+                    elist[i].firstChild.innerHTML += " - It's not easy being green";
                     elist[i].style.border = "thin solid green";
                     elist[i].style.margin = "2px";
                     elist[i].style.width = "30%";
@@ -72,7 +72,7 @@
                 document.getElementById("quote2").firstChild.innerHTML = objQuotes.fantasy;
                 document.getElementById("quote3").firstChild.innerHTML = objQuotes.roads;
                 var newDiv = document.createElement("div");
-                newDiv.class = "blue";
+                newDiv.className = "purple";
                 var newp = document.createElement("p");
                 newp.style.border = "medium solid purple"
                 newp.style.color = "purple";
@@ -86,8 +86,10 @@
                 styleNode.type = "text/css";
                 var styleBlue = document.createTextNode(".blue { border: medium solid blue; margin: 10px; width: 75%; text-align: center; font-size: 300%; text-transform: initial; border-radius: 25px 12px;}");
                 var styleGreen = document.createTextNode(".green { border: medium solid green; margin: 10px; width: 75%; text-align: center; font-size: 300%; text-transform: initial; border-radius: 25px 12px;}");
+                var stylePurple = document.createTextNode(".purple { border: medium solid orange; margin: 10px; width: 75%; text-align: center; font-size: 300%; text-transform: initial; border-radius: 25px 12px;}");
                 styleNode.appendChild(styleBlue);
                 styleNode.appendChild(styleGreen);
+                styleNode.appendChild(stylePurple);
                 document.head.appendChild(styleNode);
             }
         </script>
