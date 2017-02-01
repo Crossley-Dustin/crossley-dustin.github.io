@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Dustin's CSS3 Transitions, Transformations, and Animations</title>
+        <link rel="stylesheet" type="text/css" href="topic_css/topic_layout.css">
+    </head>
+    <body>
+        <main>
+			<section id="section1">
+				<h1>Make a game</h1>
+                <input type="number" name="across" id="rowsAcross">
+                <input type="number" name="down" id="rowsDown">
+				<button onclick="btnCreateBoard()">Build a game board</button>
+			</section>
+            <section id="gameBoard">
+            </section>
+            <script>
+                function btnCreateBoard(){
+                    var across = parseInt(document.getElementById("rowsAcross").value);
+                    var down = parseInt(document.getElementById("rowsDown").value);
+                    validateInputs(across, down);
+                    // create a grid of divs using the numbers provided
+                }
+                function validateInputs(across, down) {
+                    var errList = document.getElementsByClassName("errMsg");
+                    var listLength = errList.length - 1
+                    for(var i = listLength; i >= 0; i--) {
+                        var parent = errList[i].parentNode;
+                        parent.removeChild(errList[i]);
+                    }
+                    if (! Number.isInteger(across)) {
+                        displayError("Please enter a number for the number of rows across");
+                        return false;
+                    }
+                    if (! Number.isInteger(down)) {
+                        displayError("Please enter a number for the number of rows down");
+                        return false;
+                    }
+                }
+                function displayError(e) {
+                    var newp = document.createElement("p");
+                    newp.className = "errMsg";
+                    var tNode = document.createTextNode(e);
+                    newp.appendChild(tNode);
+                    var target = document.getElementById("section1");
+                    target.insertBefore(newp, target.firstElementChild);
+                }
+            </script>
+        </main>
+    </body>
+</html>
