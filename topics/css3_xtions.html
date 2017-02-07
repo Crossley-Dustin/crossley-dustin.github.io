@@ -14,6 +14,8 @@
 				<button onclick="btnCreateBoard()">Build a game board</button>
                 <button onclick="getLocation()">Get Location info</button>
 			</section>
+            <section id="locationInfo">
+            </section>
             <section id="gameBoard">
             </section>
             <script>
@@ -66,9 +68,15 @@
                 }
                 function parseResponse(response){
                     var objLocation = JSON.parse(response);
-                    objLocation.forEach(function(element, idx) {
-                        console.log(element, idx);
-                    });
+                    for (x in objLocation) {
+                        var newp = document.createElement("p");
+                        var locPart = x;
+                        var locInfo = objLocation[x];
+                        var tNode = document.createTextNode(x + " : " + locInfo);
+                        newp.appendChild(tNode);
+                        var target = document.getElementById("locationInfo");
+                        target.appendChild(newp);
+                    }
                 }
             </script>
         </main>
