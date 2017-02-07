@@ -52,13 +52,17 @@
                     var xhr = new XMLHttpRequest();
                     var method = "GET";
                     var url = "freegeoip.net/json";
+
+                    xhr.open(method,url,true);
+
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4 && xhr.status == 200) {
                             parseResponse(xhr.responseText);
                         }
                     }
-                    xhr.open(method,url,true);
-                    xhr.send();
+
+                    xhr.setRequestHeader("Accept", "application/json");
+                    xhr.send(null);
                 }
                 function parseResponse(response){
                     var objLocation = JSON.parse(response);
