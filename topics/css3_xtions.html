@@ -12,6 +12,7 @@
                 <input type="number" name="across" id="rowsAcross">
                 <input type="number" name="down" id="rowsDown">
 				<button onclick="btnCreateBoard()">Build a game board</button>
+                <button onclick="getLocation()">Get Location info</button>
 			</section>
             <section id="gameBoard">
             </section>
@@ -45,6 +46,22 @@
                     newp.appendChild(tNode);
                     var target = document.getElementById("section1");
                     target.insertBefore(newp, target.firstElementChild);
+                }
+                function getLocation(){
+                    //from https://freegeoip.net
+                    var xhr = new XMLHttpRequest();
+                    var method = "GET";
+                    var url = "freegeoip.net/json/";
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            parseResponse(xhr.responseText);
+                        }
+                    }
+                    xhr.open(method,url,true);
+                    xhr.send();
+                }
+                function parseResponse(response){
+                    var objLocation = JSON.parse(response);
                 }
             </script>
         </main>
