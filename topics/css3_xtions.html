@@ -66,6 +66,9 @@
                 }
                 function parseResponse(response){
                     var objLocation = JSON.parse(response);
+                    objLocation.forEach(function(element, idx) {
+                        console.log(element, idx);
+                    });
                 }
             </script>
         </main>
