@@ -8,77 +8,105 @@
     <body>
         <main>
 			<section id="section1">
-				<h1>Make a game</h1>
-                <input type="number" name="across" id="rowsAcross">
-                <input type="number" name="down" id="rowsDown">
-				<button onclick="btnCreateBoard()">Build a game board</button>
-                <button onclick="getLocation()">Get Location info</button>
+				<h1>Hellooo</h1>
 			</section>
-            <section id="locationInfo">
+            <section id="locationContainer">
+                <div class="grid" id="locationInfo">
+                </div>
             </section>
             <section id="gameBoard">
             </section>
-            <script>
-                function btnCreateBoard(){
-                    var across = parseInt(document.getElementById("rowsAcross").value);
-                    var down = parseInt(document.getElementById("rowsDown").value);
-                    validateInputs(across, down);
-                    // create a grid of divs using the numbers provided
-                }
-                function validateInputs(across, down) {
-                    var errList = document.getElementsByClassName("errMsg");
-                    var listLength = errList.length - 1
-                    for(var i = listLength; i >= 0; i--) {
-                        var parent = errList[i].parentNode;
-                        parent.removeChild(errList[i]);
-                    }
-                    if (! Number.isInteger(across)) {
-                        displayError("Please enter a number for the number of rows across");
-                        return false;
-                    }
-                    if (! Number.isInteger(down)) {
-                        displayError("Please enter a number for the number of rows down");
-                        return false;
-                    }
-                }
-                function displayError(e) {
-                    var newp = document.createElement("p");
-                    newp.className = "errMsg";
-                    var tNode = document.createTextNode(e);
-                    newp.appendChild(tNode);
-                    var target = document.getElementById("section1");
-                    target.insertBefore(newp, target.firstElementChild);
-                }
-                function getLocation(){
-                    //from https://freegeoip.net
-                    var xhr = new XMLHttpRequest();
-                    var method = "GET";
-                    var url = "https://freegeoip.net/json/";
-
-                    xhr.open(method,url,true);
-
-                    xhr.onreadystatechange = function() {
-                        if (xhr.readyState == 4 && xhr.status == 200) {
-                            parseResponse(xhr.responseText);
-                        }
-                    }
-
-                    xhr.setRequestHeader("Accept", "application/json");
-                    xhr.send(null);
-                }
-                function parseResponse(response){
-                    var objLocation = JSON.parse(response);
-                    for (x in objLocation) {
-                        var newp = document.createElement("p");
-                        var locPart = x;
-                        var locInfo = objLocation[x];
-                        var tNode = document.createTextNode(x + " : " + locInfo);
-                        newp.appendChild(tNode);
-                        var target = document.getElementById("locationInfo");
-                        target.appendChild(newp);
-                    }
-                }
-            </script>
         </main>
+
+        <script>
+            function checkStorage(){
+
+                if (localStorage.getItem("location") === null) {
+                    var newbtn1 = document.createElement("button");
+                    //newbtn1.onClick = "getLocation()";
+                    newbtn1.id = "btnGetLocation";
+                    newbtn1.setAttribute("onclick","getLocation()");
+                    var textNode1 = document.createTextNode("Get Location Info");
+                    newbtn1.appendChild(textNode1);
+                    document.getElementById("section1").appendChild(newbtn1);
+                } else {
+                    var locale = JSON.parse(localStorage.location);
+                    //display location details
+                    var newp = document.createElement("h3");
+                    var tNode = document.createTextNode("Welcome back! Here's what we remember about your last visit:");
+                    newp.appendChild(tNode);
+                    document.getElementById("locationInfo").appendChild(newp);
+                    showLocation(locale);
+                    addClearStorageBtn();
+                }
+            }
+            function getLocation(){
+                //from https://freegeoip.net
+                var xhr = new XMLHttpRequest();
+                var method = "GET";
+                var url = "https://freegeoip.net/json/";
+
+                xhr.open(method,url,true);
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        parseResponse(xhr.responseText);
+                    }
+                }
+
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.send(null);
+            }
+            function parseResponse(response){
+                var objLocation = JSON.parse(response);
+                localStorage.setItem("location", JSON.stringify(objLocation));
+                showLocation(objLocation);
+                // remove the button now that we have location info
+                removeElementByID("btnGetLocation");
+                addClearStorageBtn();
+            }
+            function showLocation(objLocation){
+                for (x in objLocation) {
+                var newp = document.createElement("div");
+                newp.className = "col-4";
+                var tNode = document.createTextNode(x + " : " + objLocation[x]);
+                newp.appendChild(tNode);
+                document.getElementById("locationInfo").appendChild(newp);
+                }
+            }
+            function removeElementByID(id){
+                var child = document.getElementById(id);
+                child.parentNode.removeChild(child);
+            }
+            function addClearStorageBtn(){
+                //add button to clear locale storage
+                var newbtn2 = document.createElement("button");
+                //newbtn2.onClick = "clearLocalStorage()";
+                newbtn2.setAttribute("onclick","clearLocalStorage()");
+                newbtn2.id = "btnClearStorage";
+                var textNode2 = document.createTextNode("Clear Local Storage");
+                newbtn2.appendChild(textNode2);
+                document.getElementById("section1").appendChild(newbtn2);
+            }
+            function clearLocalStorage(){
+                localStorage.clear();
+                removeLocationInfo();
+                removeElementByID("btnClearStorage");
+                // now check local storage and add appropriate button
+                checkStorage();
+            }
+            function removeLocationInfo(){
+                var parent = document.getElementById("locationInfo");
+                var para = parent.getElementsByTagName("div");
+                for (var i = para.length -1; i >= 0; i--) {
+                    parent.removeChild(para[i]);
+                }
+                var para = parent.getElementsByTagName("h3");
+                for (var i = para.length -1; i >= 0; i--) {
+                    parent.removeChild(para[i]);
+                }
+            }
+            window.onload = checkStorage();
+        </script>
     </body>
 </html>
