@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Dustin's Local Storage Example</title>
+        <link rel="stylesheet" type="text/css" href="topic_css/topic_layout.css">
+    </head>
+    <body>
+        <main>
+			<section id="section1">
+				<h1>Hellooo There</h1>
+			</section>
+            <section id="locationContainer">
+                <div class="grid" id="locationInfo">
+                </div>
+                <div id="environInfo">
+                </div>
+            </section>
+        </main>
+
+        <script>
+            function Location(myLocation){
+                this.city = myLocation.city;
+                this.countryCode = myLocation.country_code;
+                this.countryName = myLocation.country_name;
+                this.ip = myLocation.ip;
+                this.latitude = myLocation.latitude;
+                this.longitude = myLocation.longitude;
+                this.metroCode = myLocation.metro_code;
+                this.regionCode = myLocation.region_code;
+                this.regionName = myLocation.region_name;
+                this.timeZone = myLocation.time_zone;
+                this.zipCode = myLocation.zip_code;
+                this.timeEntered = new Date().toLocaleString();
+                this.locationMessage = "It looks like you are connecting from " + this.city + " " + this.regionCode + ". Your IP address is " + this.ip;
+            }
+            // Object.defineProperty(Location.prototype, "" {
+            //     this.locationMessage = function(){
+            //         enumerable: false;
+            //         return "It looks like you are connecting from " + this.city + " " + this.regionCode + " " + this.countryName + " . Your IP address is " + this.ip;}
+            // })
+            function Environment(h,w,ah,aw,cd,pd){
+                this.width = w;
+                this.height = h;
+                this.availableHeight = ah;
+                this.availableWidth = aw;
+                this.colorDepth = cd;
+                this.pixelDepth = pd;
+                this.remainingWidth = parseInt(aw) - parseInt(w);
+                this.remainingHeight = parseInt(ah) - parseInt(h);
+            }
+            function checkStorage(){
+                if (localStorage.getItem("location") === null) {
+                    var newbtn1 = document.createElement("button");
+                    //newbtn1.onClick = "getLocation()";
+                    newbtn1.id = "btnGetLocation";
+                    newbtn1.setAttribute("onclick","getLocation()");
+                    var textNode1 = document.createTextNode("Get Location Info");
+                    newbtn1.appendChild(textNode1);
+                    document.getElementById("section1").appendChild(newbtn1);
+                } else {
+                    var locale = JSON.parse(localStorage.location);
+                    var environ = JSON.parse(localStorage.getItem("environment"));
+                    //display location details
+                    var newp = document.createElement("h3");
+                    var tNode = document.createTextNode(locale.locationMessage);
+                    newp.appendChild(tNode);
+                    document.getElementById("locationInfo").appendChild(newp);
+                    //showLocation(locale);
+                    showDetail(locale,"locationInfo","div","col-4");
+                    showDetail(environ,"environInfo","div","col-3");
+                    addClearStorageBtn();
+                }
+            }
+            function getLocation(){
+                //from https://freegeoip.net
+                var xhr = new XMLHttpRequest();
+                var method = "GET";
+                var url = "https://freegeoip.net/json/";
+                xhr.open(method,url,true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        parseResponse(xhr.responseText);
+                    }
+                }
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.send(null);
+            }
+            function getEnvironment(){
+                var env = new Environment(screen.height, screen.width,screen.availWidth,screen.availHeight,screen.colorDepth,screen.pixelDepth)
+                return env; //localStorage.setItem("environment", JSON.stringify(env));
+            }
+            function parseResponse(response){
+                var objLocation = JSON.parse(response);
+                var environ = getEnvironment();
+                var locale = new Location(objLocation);
+                localStorage.setItem("location", JSON.stringify(locale));
+                localStorage.setItem("environment", JSON.stringify(environ));
+                //showLocation(locale);
+                showDetail(locale,"locationInfo","div","col-4");
+                showDetail(environ,"environInfo","div","col-3");
+                // remove the button now that we have location info
+                removeElementByID("btnGetLocation");
+                addClearStorageBtn();
+            }
+            // function showLocation(objLocation){
+            //     // for(var property in objLocation){
+            //     //     console.log(property + " : " + objLocation[property]);
+            //     // }
+            //     for (x in objLocation) {
+            //         var newp = document.createElement("div");
+            //         newp.className = "col-4";
+            //         var tNode = document.createTextNode(x + " : " + objLocation[x]);
+            //         newp.appendChild(tNode);
+            //         document.getElementById("locationInfo").appendChild(newp);
+            //     }
+            // }
+            // function showEnvironment(objEnvironment){
+            //     for (x in objEnvironment){
+            //         var newd = document.createElement("div");
+            //         newd.className = "col-3";
+            //         var tNode = document.createTextNode(x + " : " + objEnvironment[x]);
+            //         newd.appendChild(tNode);
+            //         document.getElementById("environInfo").appendChild(newd);
+            //     }
+            // }
+            function showDetail(objData,parentID,elementType,className){
+                for (x in objData) {
+                    var newE = document.createElement(elementType);
+                    newE.className = className;
+                    var tNode = document.createTextNode(x + " : " + objData[x]);
+                    newE.appendChild(tNode);
+                    document.getElementById(parentID).appendChild(newE);
+                }
+            }
+            function removeElementByID(id){
+                var child = document.getElementById(id);
+                child.parentNode.removeChild(child);
+            }
+            function addClearStorageBtn(){
+                //add button to clear local storage
+                var newbtn2 = document.createElement("button");
+                //newbtn2.onClick = "clearLocalStorage()";
+                newbtn2.setAttribute("onclick","clearLocalStorage()");
+                newbtn2.id = "btnClearStorage";
+                var textNode2 = document.createTextNode("Clear Local Storage");
+                newbtn2.appendChild(textNode2);
+                document.getElementById("section1").appendChild(newbtn2);
+            }
+            function clearLocalStorage(){
+                localStorage.removeItem("location");
+                localStorage.removeItem("environment");
+                removeByTag("locationInfo","h3");
+                removeByTag("locationInfo","div");
+                removeByTag("environInfo","div");
+                removeElementByID("btnClearStorage");
+                // now check local storage and add appropriate button
+                checkStorage();
+            }
+            // function removeLocationInfo(){
+            //     var parent = document.getElementById("locationInfo");
+            //     var para = parent.getElementsByTagName("div");
+            //     for (var i = para.length -1; i >= 0; i--) {
+            //         parent.removeChild(para[i]);
+            //     }
+            //     var para = parent.getElementsByTagName("h3");
+            //     // remove in reverse order, seems to work best
+            //     for (var i = para.length -1; i >= 0; i--) {
+            //         parent.removeChild(para[i]);
+            //     }
+            // }
+            function removeByTag(parentID,tagName){
+                var parent = document.getElementById(parentID);
+                var nList = parent.getElementsByTagName(tagName);
+                // remove in reverse order seems to work best
+                for (var i = nList.length -1; i >= 0; i--) {
+                    parent.removeChild(nList[i]);
+                }
+            }
+            window.onload = checkStorage();
+        </script>
+    </body>
+</html>
