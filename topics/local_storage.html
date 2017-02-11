@@ -9,11 +9,14 @@
         <main>
 			<section id="section1">
 				<h1>Hellooo There</h1>
+                <button onclick="sizeOfStorage()">Show Size of Local Storage</button>
+                <p id="sizeContainer"></p>
 			</section>
             <section id="locationContainer">
                 <div class="grid" id="locationInfo">
                 </div>
-                <div id="environInfo">
+                <br>
+                <div class="grid" id="environInfo">
                 </div>
             </section>
         </main>
@@ -34,11 +37,6 @@
                 this.timeEntered = new Date().toLocaleString();
                 this.locationMessage = "It looks like you are connecting from " + this.city + " " + this.regionCode + ". Your IP address is " + this.ip;
             }
-            // Object.defineProperty(Location.prototype, "" {
-            //     this.locationMessage = function(){
-            //         enumerable: false;
-            //         return "It looks like you are connecting from " + this.city + " " + this.regionCode + " " + this.countryName + " . Your IP address is " + this.ip;}
-            // })
             function Environment(h,w,ah,aw,cd,pd){
                 this.width = w;
                 this.height = h;
@@ -68,7 +66,7 @@
                     document.getElementById("locationInfo").appendChild(newp);
                     //showLocation(locale);
                     showDetail(locale,"locationInfo","div","col-4");
-                    showDetail(environ,"environInfo","div","col-3");
+                    showDetail(environ,"environInfo","div","col-4");
                     addClearStorageBtn();
                 }
             }
@@ -98,32 +96,11 @@
                 localStorage.setItem("environment", JSON.stringify(environ));
                 //showLocation(locale);
                 showDetail(locale,"locationInfo","div","col-4");
-                showDetail(environ,"environInfo","div","col-3");
+                showDetail(environ,"environInfo","div","col-4");
                 // remove the button now that we have location info
                 removeElementByID("btnGetLocation");
                 addClearStorageBtn();
             }
-            // function showLocation(objLocation){
-            //     // for(var property in objLocation){
-            //     //     console.log(property + " : " + objLocation[property]);
-            //     // }
-            //     for (x in objLocation) {
-            //         var newp = document.createElement("div");
-            //         newp.className = "col-4";
-            //         var tNode = document.createTextNode(x + " : " + objLocation[x]);
-            //         newp.appendChild(tNode);
-            //         document.getElementById("locationInfo").appendChild(newp);
-            //     }
-            // }
-            // function showEnvironment(objEnvironment){
-            //     for (x in objEnvironment){
-            //         var newd = document.createElement("div");
-            //         newd.className = "col-3";
-            //         var tNode = document.createTextNode(x + " : " + objEnvironment[x]);
-            //         newd.appendChild(tNode);
-            //         document.getElementById("environInfo").appendChild(newd);
-            //     }
-            // }
             function showDetail(objData,parentID,elementType,className){
                 for (x in objData) {
                     var newE = document.createElement(elementType);
@@ -157,18 +134,6 @@
                 // now check local storage and add appropriate button
                 checkStorage();
             }
-            // function removeLocationInfo(){
-            //     var parent = document.getElementById("locationInfo");
-            //     var para = parent.getElementsByTagName("div");
-            //     for (var i = para.length -1; i >= 0; i--) {
-            //         parent.removeChild(para[i]);
-            //     }
-            //     var para = parent.getElementsByTagName("h3");
-            //     // remove in reverse order, seems to work best
-            //     for (var i = para.length -1; i >= 0; i--) {
-            //         parent.removeChild(para[i]);
-            //     }
-            // }
             function removeByTag(parentID,tagName){
                 var parent = document.getElementById(parentID);
                 var nList = parent.getElementsByTagName(tagName);
@@ -176,6 +141,20 @@
                 for (var i = nList.length -1; i >= 0; i--) {
                     parent.removeChild(nList[i]);
                 }
+            }
+            function sizeOfStorage(){
+                var _lsTotal=0,_xLen,_x;
+                var storageElements = [];
+                var parts = "";
+                for(_x in localStorage){
+                    _xLen= ((localStorage[_x].length + _x.length)* 2);
+                    _lsTotal+=_xLen;
+                    var piece = (_x.substr(0,50)+" = "+ (_xLen/1024).toFixed(2)+" KB")
+                    storageElements.push(piece);
+                    parts += piece + "<br>";
+                }
+                var total = ("Total = " + (_lsTotal / 1024).toFixed(2) + " KB");
+                document.getElementById("sizeContainer").innerHTML = parts + total;
             }
             window.onload = checkStorage();
         </script>
