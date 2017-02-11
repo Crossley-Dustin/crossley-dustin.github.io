@@ -165,7 +165,6 @@
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == 4 && xhr.status == 200) {
-                        parseQuotes(xhr.responseText);
                         showDetail(JSON.parse(xhr.responseText),"daterInfo","div","col-4");
                     }
                 }
