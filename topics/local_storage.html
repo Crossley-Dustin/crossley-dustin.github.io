@@ -11,6 +11,7 @@
 				<h1>Hellooo There</h1>
                 <button onclick="sizeOfStorage()">Show Size of Local Storage</button>
                 <p id="sizeContainer"></p>
+                <button onclick="readJsonFile('bin/zips.json')">Load Large File</button>
 			</section>
             <section id="locationContainer">
                 <div class="grid" id="locationInfo">
@@ -18,6 +19,10 @@
                 <br>
                 <div class="grid" id="environInfo">
                 </div>
+            </section>
+            <br>
+            <section id="dataContainer">
+                <div class="grid" id="daterInfo"></div>
             </section>
         </main>
 
@@ -155,6 +160,17 @@
                 }
                 var total = ("Total = " + (_lsTotal / 1024).toFixed(2) + " KB");
                 document.getElementById("sizeContainer").innerHTML = parts + total;
+            }
+            function readJsonFile(fileURL){
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        parseQuotes(xhr.responseText);
+                        showDetail(JSON.parse(xhr.responseText),"daterInfo","div","col-4");
+                    }
+                }
+                xhr.open("GET",fileURL,true);
+                xhr.send();
             }
             window.onload = checkStorage();
         </script>
