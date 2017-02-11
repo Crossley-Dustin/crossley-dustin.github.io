@@ -11,7 +11,7 @@
 				<h1>Hellooo There</h1>
                 <button onclick="sizeOfStorage()">Show Size of Local Storage</button>
                 <p id="sizeContainer"></p>
-                <button onclick="readJsonFile('bin/zips.json')">Load Large File</button>
+                <button onclick="readJsonFile('bin/zips_2.json')">Load Large File</button>
 			</section>
             <section id="locationContainer">
                 <div class="grid" id="locationInfo">
@@ -107,6 +107,15 @@
                 addClearStorageBtn();
             }
             function showDetail(objData,parentID,elementType,className){
+                for (x in objData) {
+                    var newE = document.createElement(elementType);
+                    newE.className = className;
+                    var tNode = document.createTextNode(x + " : " + objData[x]);
+                    newE.appendChild(tNode);
+                    document.getElementById(parentID).appendChild(newE);
+                }
+            }
+            function showDetailByLine(objData,parentID,elementType,className){
                 for (x in objData) {
                     var newE = document.createElement(elementType);
                     newE.className = className;
