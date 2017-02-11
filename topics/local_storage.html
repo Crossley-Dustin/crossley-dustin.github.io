@@ -115,15 +115,6 @@
                     document.getElementById(parentID).appendChild(newE);
                 }
             }
-            function showDetailByLine(objData,parentID,elementType,className){
-                for (x in objData) {
-                    var newE = document.createElement(elementType);
-                    newE.className = className;
-                    var tNode = document.createTextNode(x + " : " + objData[x]);
-                    newE.appendChild(tNode);
-                    document.getElementById(parentID).appendChild(newE);
-                }
-            }
             function removeElementByID(id){
                 var child = document.getElementById(id);
                 child.parentNode.removeChild(child);
@@ -141,6 +132,7 @@
             function clearLocalStorage(){
                 localStorage.removeItem("location");
                 localStorage.removeItem("environment");
+                localStorage.removeItem("zips");
                 removeByTag("locationInfo","h3");
                 removeByTag("locationInfo","div");
                 removeByTag("environInfo","div");
@@ -175,7 +167,8 @@
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         //var response = JSON.parse(xhr.responseText);
-                        showDetail(xhr.responseText,"daterInfo","div","col-4");
+                        localStorage.setItem("zips",xhr.responseText);
+                        //showDetail(xhr.responseText,"daterInfo","div","col-4");
                     }
                 }
                 xhr.open("GET",fileURL,true);
