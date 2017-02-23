@@ -9,104 +9,66 @@
         <main>
 			<section id="section1">
 				<h1>Hellooo</h1>
+                <button onclick="getCasaCharacters()">LoadFile</button>
+                <button onclick="clearLocalStorage()">LoadFile</button>
 			</section>
-            <section id="locationContainer">
-                <div class="grid" id="locationInfo">
-                </div>
-            </section>
-            <section id="gameBoard">
-            </section>
+            <canvas id="c" width="800" height="200"></canvas>
         </main>
 
         <script>
-            function checkStorage(){
+            var cv = document.querySelector("#c");
+            var ctx = cv.getContext("2d");
 
-                if (localStorage.getItem("location") === null) {
-                    var newbtn1 = document.createElement("button");
-                    //newbtn1.onClick = "getLocation()";
-                    newbtn1.id = "btnGetLocation";
-                    newbtn1.setAttribute("onclick","getLocation()");
-                    var textNode1 = document.createTextNode("Get Location Info");
-                    newbtn1.appendChild(textNode1);
-                    document.getElementById("section1").appendChild(newbtn1);
+            //ctx.strokeRect(50,50,100,100)
+            // ctx.beginPath();
+            // ctx.moveTo(75,75);
+            // ctx.lineTo(125,75);
+            // ctx.lineTo(125,125);
+            // ctx.lineTo(75,75);
+            // ctx.fill();
+
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "white";
+            ctx.font = "36pt Impact"
+            ctx.textAlign = "center";
+            ctx.fillText("CANVAS MEMES!", c.width/2, 40);
+
+            ctx.lineWidth = 3;
+            ctx.strokeText("CANVAS MEMES!", c.width/2, 40);
+
+
+            // ctx.fillStyle = "blue";
+            // ctx.fillRect(100,100,100,100);
+            // ctx.strokeRect(50,50,50,50);
+
+            function getCasaCharacters(){
+                checkStorage();
+                var cb = JSON.parse(localStorage.casa);
+                var chars = cb.actors;
+            }
+            function checkStorage(){
+                if (localStorage.getItem("casa") === null) {
+                    // give a red light
+                    storeJsonFile('bin/Casablanca.json');
                 } else {
-                    var locale = JSON.parse(localStorage.location);
-                    //display location details
-                    var newp = document.createElement("h3");
-                    var tNode = document.createTextNode("Welcome back! Here's what we remember about your last visit:");
-                    newp.appendChild(tNode);
-                    document.getElementById("locationInfo").appendChild(newp);
-                    showLocation(locale);
-                    addClearStorageBtn();
+                    // give a green light
                 }
             }
-            function getLocation(){
-                //from https://freegeoip.net
+            function storeJsonFile(fileURL){
                 var xhr = new XMLHttpRequest();
-                var method = "GET";
-                var url = "https://freegeoip.net/json/";
-
-                xhr.open(method,url,true);
-
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == 4 && xhr.status == 200) {
-                        parseResponse(xhr.responseText);
+                        //var response = JSON.parse(xhr.responseText);
+                        localStorage.setItem("casa",xhr.responseText);
+                        //showDetail(xhr.responseText,"daterInfo","div","col-4");
                     }
                 }
-
-                xhr.setRequestHeader("Accept", "application/json");
-                xhr.send(null);
-            }
-            function parseResponse(response){
-                var objLocation = JSON.parse(response);
-                localStorage.setItem("location", JSON.stringify(objLocation));
-                showLocation(objLocation);
-                // remove the button now that we have location info
-                removeElementByID("btnGetLocation");
-                addClearStorageBtn();
-            }
-            function showLocation(objLocation){
-                for (x in objLocation) {
-                var newp = document.createElement("div");
-                newp.className = "col-4";
-                var tNode = document.createTextNode(x + " : " + objLocation[x]);
-                newp.appendChild(tNode);
-                document.getElementById("locationInfo").appendChild(newp);
-                }
-            }
-            function removeElementByID(id){
-                var child = document.getElementById(id);
-                child.parentNode.removeChild(child);
-            }
-            function addClearStorageBtn(){
-                //add button to clear locale storage
-                var newbtn2 = document.createElement("button");
-                //newbtn2.onClick = "clearLocalStorage()";
-                newbtn2.setAttribute("onclick","clearLocalStorage()");
-                newbtn2.id = "btnClearStorage";
-                var textNode2 = document.createTextNode("Clear Local Storage");
-                newbtn2.appendChild(textNode2);
-                document.getElementById("section1").appendChild(newbtn2);
+                xhr.open("GET",fileURL,true);
+                xhr.send();
             }
             function clearLocalStorage(){
                 localStorage.clear();
-                removeLocationInfo();
-                removeElementByID("btnClearStorage");
-                // now check local storage and add appropriate button
-                checkStorage();
             }
-            function removeLocationInfo(){
-                var parent = document.getElementById("locationInfo");
-                var para = parent.getElementsByTagName("div");
-                for (var i = para.length -1; i >= 0; i--) {
-                    parent.removeChild(para[i]);
-                }
-                var para = parent.getElementsByTagName("h3");
-                for (var i = para.length -1; i >= 0; i--) {
-                    parent.removeChild(para[i]);
-                }
-            }
-            window.onload = checkStorage();
         </script>
     </body>
 </html>
