@@ -46,7 +46,8 @@
                 checkStorage();
                 var cb = JSON.parse(localStorage.casa);
                 var chars = cb.data.movies[0].actors;
-                var randChar = chars[7].actorName;
+                var randomNum = randomNumberGenerator(0,chars.count);
+                var randChar = chars[randomNum].actorName;
                 document.getElementById("randomCharacter").innerHTML = randChar;
             }
             function checkStorage(){
@@ -56,6 +57,14 @@
                 } else {
                     // give a green light
                 }
+            }
+            function randomNumberGenerator(min, max){
+                // set our random number limits
+                var minimum = min;
+                var maximum = max;
+                // do some math to get a whole number between our limits
+                var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+                return randomnumber;
             }
             function storeJsonFile(fileURL){
                 var xhr = new XMLHttpRequest();
