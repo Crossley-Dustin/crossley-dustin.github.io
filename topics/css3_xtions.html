@@ -44,7 +44,7 @@
             function getCasaCharacters(){
                 checkStorage();
                 var cb = JSON.parse(localStorage.casa);
-                var chars = cb.actors;
+                var chars = cb.data.movies[0].actors;
             }
             function checkStorage(){
                 if (localStorage.getItem("casa") === null) {
