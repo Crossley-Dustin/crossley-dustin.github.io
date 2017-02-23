@@ -9,8 +9,8 @@
         <main>
 			<section id="section1">
 				<h1>Hellooo</h1>
-                <button onclick="getCasaCharacters()">LoadFile</button>
-                <button onclick="clearLocalStorage()">LoadFile</button>
+                <button onclick="getCasaCharacters()">Load File</button>
+                <button onclick="clearLocalStorage()">Clear Storage</button>
 			</section>
             <canvas id="c" width="800" height="200"></canvas>
         </main>
@@ -49,7 +49,7 @@
             function checkStorage(){
                 if (localStorage.getItem("casa") === null) {
                     // give a red light
-                    storeJsonFile('bin/Casablanca.json');
+                    storeJsonFile('bin/casblanca.json');
                 } else {
                     // give a green light
                 }
