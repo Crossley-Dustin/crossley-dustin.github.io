@@ -46,7 +46,7 @@
                 checkStorage();
                 var cb = JSON.parse(localStorage.casa);
                 var chars = cb.data.movies[0].actors;
-                var randomNum = randomNumberGenerator(0,chars.count);
+                var randomNum = randomNumberGenerator(0,chars.length);
                 var randChar = chars[randomNum].actorName;
                 document.getElementById("randomCharacter").innerHTML = randChar;
             }
