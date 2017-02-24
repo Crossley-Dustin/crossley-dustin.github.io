@@ -67,7 +67,7 @@
                 var filteredList = [];
                 for (var i = 0; i < quotes.length; i++){
                     for (var j = 0; j < quotes[i].nameId.length; j++){
-                        if (quotes[i].nameId[j] = query){
+                        if (quotes[i].nameId[j] == query){
                             filteredList.push(quotes[i]);
                             break; // jump out of this loop in case there are multiple quotes from this character in the same quote block
                         }
