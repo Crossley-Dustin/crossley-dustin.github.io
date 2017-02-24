@@ -63,8 +63,8 @@
             }
             function filterByID(query){
                 var cb = JSON.parse(localStorage.casa);
-                return cb.data.movies[0].quotes.filter(function(x) {
-                    return x.indexOf(query) > -1;
+                return cb.data.movies[0].quotes.filter(function(el) {
+                    return el.indexOf(query) > -1;
                 })
             }
             function checkStorage(){
