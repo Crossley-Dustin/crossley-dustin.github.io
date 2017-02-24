@@ -12,7 +12,7 @@
                 <button onclick="showCasaCharacter()">Load File</button>
                 <button onclick="clearLocalStorage()">Clear Storage</button>
                 <p id="randomCharacter"></p>
-                <div><img id="charImg"></div>
+                <div><img id="charImg"><p id="charQuote"></p></div>
 			</section>
             <canvas id="c" width="800" height="200"></canvas>
         </main>
@@ -47,11 +47,25 @@
                 checkStorage();
                 var cb = JSON.parse(localStorage.casa);
                 var chars = cb.data.movies[0].actors;
-                var randomNum = randomNumberGenerator(1,chars.length);
-                var randChar = chars[randomNum-1];
+                var randomNumChar = randomNumberGenerator(1,chars.length);
+
+                var randChar = chars[randomNumChar-1];
+                var quotesByCharacter = filterByID(randChar.id);
+                var randomNumQuote = randomNumberGenerator(1,quotesByCharacter.length);
+
+                var randQuote = quotesByCharacter[randomNumQuote-1];
                 document.getElementById("randomCharacter").innerHTML = randChar.actorName;
                 document.getElementById("charImg").src = randChar.urlPhoto;
                 document.getElementById("charImg").alt = randChar.actorName;
+                document.getElementById("charImg").addEventListener('touchend', evt => {
+                    document.getElementById("charQuote").innerHTML = randQuote;
+                })
+            }
+            function filterByID(query){
+                var cb = JSON.parse(localStorage.casa);
+                return cb.data.movies[0].quotes.filter(function(x) {
+                    return x.indexOf(query) > -1;
+                })
             }
             function checkStorage(){
                 if (localStorage.getItem("casa") === null) {
