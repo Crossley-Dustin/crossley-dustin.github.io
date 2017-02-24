@@ -64,7 +64,7 @@
             function filterByID(query){
                 var cb = JSON.parse(localStorage.casa);
                 var quotes = cb.data.movies[0].quotes;
-                var filteredList = {};
+                var filteredList = [];
                 for (var i = 0; i < quotes.length; i++){
                     for (var j = 0; j < quotes[i].nameId.length; j++){
                         if (quotes[i].nameId[j] = query){
