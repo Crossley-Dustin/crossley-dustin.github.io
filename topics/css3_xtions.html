@@ -12,7 +12,7 @@
                 <button onclick="showCasaCharacter()">Load File</button>
                 <button onclick="clearLocalStorage()">Clear Storage</button>
                 <p id="randomCharacter"></p>
-                <div id="charImg"><a href="">Random Character Image here</a></div>
+                <div id="charImg"><img alt="Hello World"></div>
 			</section>
             <canvas id="c" width="800" height="200"></canvas>
         </main>
@@ -48,9 +48,10 @@
                 var cb = JSON.parse(localStorage.casa);
                 var chars = cb.data.movies[0].actors;
                 var randomNum = randomNumberGenerator(1,chars.length);
-                var randChar = chars[randomNum-1].actorName;
-                document.getElementById("randomCharacter").innerHTML = randChar;
-                document.getElementById("charImg").href = chars[randomNum -1].urlPhoto;
+                var randChar = chars[randomNum-1];
+                document.getElementById("randomCharacter").innerHTML = randChar.actorName;
+                document.getElementById("charImg").src = randChar.urlPhoto;
+                document.getElementById("charImg").alt = randChar.actorName;
             }
             function checkStorage(){
                 if (localStorage.getItem("casa") === null) {
