@@ -12,7 +12,7 @@
                 <button onclick="showCasaCharacter()">Load File</button>
                 <button onclick="clearLocalStorage()">Clear Storage</button>
                 <p id="randomCharacter"></p>
-                <div id="charImg"><img alt="Hello World"></div>
+                <div id="charImg"><img src="https://images-na.ssl-images-amazon.com/images/M/MV5BYWM2NzNmZTctYjJkNi00YjBjLWIyMjgtNjMyMWYxNDZlZmI0XkEyXkFqcGdeQXVyNTk5NzQ5Ng@@._V1_UY44_CR12,0,32,44_AL_.jpg"></div>
 			</section>
             <canvas id="c" width="800" height="200"></canvas>
         </main>
@@ -50,7 +50,7 @@
                 var randomNum = randomNumberGenerator(1,chars.length);
                 var randChar = chars[randomNum-1];
                 document.getElementById("randomCharacter").innerHTML = randChar.actorName;
-                document.getElementById("charImg").src = "https://images-na.ssl-images-amazon.com/images/M/MV5BYWM2NzNmZTctYjJkNi00YjBjLWIyMjgtNjMyMWYxNDZlZmI0XkEyXkFqcGdeQXVyNTk5NzQ5Ng@@._V1_UY44_CR12,0,32,44_AL_.jpg" //randChar.urlPhoto;
+                //document.getElementById("charImg").src = "" //randChar.urlPhoto;
                 document.getElementById("charImg").alt = randChar.actorName;
             }
             function checkStorage(){
