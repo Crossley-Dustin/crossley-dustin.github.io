@@ -9,9 +9,10 @@
         <main>
 			<section id="section1">
 				<h1>Hellooo</h1>
-                <button onclick="getCasaCharacters()">Load File</button>
+                <button onclick="showCasaCharacter()">Load File</button>
                 <button onclick="clearLocalStorage()">Clear Storage</button>
                 <p id="randomCharacter"></p>
+                <div id="charImg"><a href="">Random Character Image here</a></div>
 			</section>
             <canvas id="c" width="800" height="200"></canvas>
         </main>
@@ -42,13 +43,14 @@
             // ctx.fillRect(100,100,100,100);
             // ctx.strokeRect(50,50,50,50);
 
-            function getCasaCharacters(){
+            function showCasaCharacter(){
                 checkStorage();
                 var cb = JSON.parse(localStorage.casa);
                 var chars = cb.data.movies[0].actors;
                 var randomNum = randomNumberGenerator(1,chars.length);
                 var randChar = chars[randomNum-1].actorName;
                 document.getElementById("randomCharacter").innerHTML = randChar;
+                document.getElementById("charImg").href = chars[randomNum -1].urlPhoto;
             }
             function checkStorage(){
                 if (localStorage.getItem("casa") === null) {
@@ -81,6 +83,7 @@
             function clearLocalStorage(){
                 localStorage.clear();
             }
+            window.onload = showCasaCharacter();
         </script>
     </body>
 </html>
