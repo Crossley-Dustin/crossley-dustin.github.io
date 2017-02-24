@@ -58,14 +58,22 @@
                 document.getElementById("charImg").src = randChar.urlPhoto;
                 document.getElementById("charImg").alt = randChar.actorName;
                 document.getElementById("charImg").addEventListener('touchend', evt => {
-                    document.getElementById("charQuote").innerHTML = randQuote;
+                    document.getElementById("charQuote").innerHTML = randQuote.quote[0];
                 })
             }
             function filterByID(query){
                 var cb = JSON.parse(localStorage.casa);
-                return cb.data.movies[0].quotes.filter(function(el) {
-                    return el.indexOf(query) > -1;
-                })
+                var quotes = cb.data.movies[0].quotes;
+                var filteredList;
+                for (var i = 0; i < quotes.length; i++){
+                    for (var j = 0; j < quotes[i].nameID; j++){
+                        if (quotes[i].nameID[j] = query){
+                            filteredList.push(quotes[i]);
+                        }
+                    }
+                }
+                return filteredList;
+                }
             }
             function checkStorage(){
                 if (localStorage.getItem("casa") === null) {
