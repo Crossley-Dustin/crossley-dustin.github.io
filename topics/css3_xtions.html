@@ -4,44 +4,47 @@
         <meta charset="UTF-8">
         <title>Dustin's CSS3 Transitions, Transformations, and Animations</title>
         <link rel="stylesheet" type="text/css" href="topic_css/topic_layout.css">
+        <style>
+
+        </style>
     </head>
     <body>
         <main>
 			<section id="section1">
-				<h1>Hellooo</h1>
-                <button onclick="showCasaCharacter()">Load File</button>
+				<h1>Casablanca</h1>
+                <!-- <button onclick="showCasaCharacter()">Load File</button> -->
                 <button onclick="clearLocalStorage()">Clear Storage</button>
-                <p id="randomCharacter"></p>
-                <div><img id="charImg"><p id="charQuote"></p></div>
+                <h2> id="randomCharacter"></h2>
+                <div class="col-6"><img id="charImg"><p id="charQuote"></p></div>
 			</section>
-            <canvas id="c" width="800" height="200"></canvas>
+            <!-- <canvas id="c" width="800" height="200"></canvas> -->
         </main>
 
         <script>
-            var cv = document.querySelector("#c");
-            var ctx = cv.getContext("2d");
+            // var cv = document.querySelector("#c");
+            // var ctx = cv.getContext("2d");
 
-            //ctx.strokeRect(50,50,100,100)
-            // ctx.beginPath();
-            // ctx.moveTo(75,75);
-            // ctx.lineTo(125,75);
-            // ctx.lineTo(125,125);
-            // ctx.lineTo(75,75);
-            // ctx.fill();
+            // //ctx.strokeRect(50,50,100,100)
+            // // ctx.beginPath();
+            // // ctx.moveTo(75,75);
+            // // ctx.lineTo(125,75);
+            // // ctx.lineTo(125,125);
+            // // ctx.lineTo(75,75);
+            // // ctx.fill();
 
-            ctx.strokeStyle = "black";
-            ctx.fillStyle = "white";
-            ctx.font = "36pt Impact"
-            ctx.textAlign = "center";
-            ctx.fillText("CANVAS MEMES!", c.width/2, 40);
+            // ctx.strokeStyle = "black";
+            // ctx.fillStyle = "white";
+            // ctx.font = "36pt Impact"
+            // ctx.textAlign = "center";
+            // ctx.fillText("CANVAS MEMES!", c.width/2, 40);
 
-            ctx.lineWidth = 3;
-            ctx.strokeText("CANVAS MEMES!", c.width/2, 40);
+            // ctx.lineWidth = 3;
+            // ctx.strokeText("CANVAS MEMES!", c.width/2, 40);
 
 
-            // ctx.fillStyle = "blue";
-            // ctx.fillRect(100,100,100,100);
-            // ctx.strokeRect(50,50,50,50);
+            // // ctx.fillStyle = "blue";
+            // // ctx.fillRect(100,100,100,100);
+            // // ctx.strokeRect(50,50,50,50);
 
             function showCasaCharacter(){
                 checkStorage();
@@ -61,6 +64,12 @@
                     document.getElementById("charQuote").innerHTML = randQuote.quote[0];
                 })
             }
+            // function randQuoteByCharacter(character){
+            //     var quotesByCharacter = filterByID(character.actorId);
+            //     var randomNumQuote = randomNumberGenerator(1,quotesByCharacter.length);
+            //     var randQuote = quotesByCharacter[randomNumQuote-1];
+            //     document.getElementById("charQuote").innerHTML = randQuote.quote[0];
+            // }
             function filterByID(query){
                 var cb = JSON.parse(localStorage.casa);
                 var quotes = cb.data.movies[0].quotes;
