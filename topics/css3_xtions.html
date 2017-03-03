@@ -5,6 +5,10 @@
         <title>Dustin's CSS3 Transitions, Transformations, and Animations</title>
         <link rel="stylesheet" type="text/css" href="topic_css/topic_layout.css">
         <style>
+            #c {
+                width: 320px;
+                height: 120px;
+            }
             .flip-container {
                 perspective: 1000px;
             }
@@ -13,7 +17,7 @@
             }
             .flip-container, .front, .back {
                 width: 320px;
-                height: 480px;
+                height: 320px;
             }
             .flipper {
                 transition: 0.6s;
@@ -28,69 +32,60 @@
             }
             .front {
                 z-index: 2;
+                background-color: azure;
             }
             .back {
                 transform: rotateY(180deg);
+                background-color: cornsilk;
             }
         </style>
     </head>
     <body>
         <main>
 			<section id="section1">
-				<h1>Casablanca Time!</h1>
+				<h1>Movie Time!</h1>
+                <canvas id="c"></canvas>
+
                 <!-- <button onclick="showCasaCharacter()">Load File</button> -->
-
-
-
                 <div class="flip-container" ontouchstart="this.classlist.toggle('hover');">
                     <div class="flipper">
                         <div class="front">
                             <!-- front content -->
-                            <!--<p>Hello World Front!</p> -->
-                            <h2 id="randomCharacter"></h2>
-                            <div class="col-6"><img id="charImg"></div>
+                            <p>Hello World Front!</p>
+                            <img id="moviePoster">
                         </div>
                         <div class="back">
                             <!-- back content -->
                             <p>Hello World Back!</p>
-                            <p id="charQuote"></p>
+                            <p id="movieRelease"></p>
+                            <p id="movieRuntime"></p>
+                            <p id="movieDirectors"></p>
+                            <p id="movieSimplePlot"></p>
                         </div>
                     </div>
                 </div>
+                <h2 id="randomCharacter"></h2>
+                <div class="col-6"><img id="charImg"></div>
+                <p id="charQuote"></p>
 			</section>
             <!-- <canvas id="c" width="800" height="200"></canvas> -->
             <button onclick="clearLocalStorage()">Clear Storage</button>
         </main>
 
         <script>
-            // var cv = document.querySelector("#c");
-            // var ctx = cv.getContext("2d");
-
-            // //ctx.strokeRect(50,50,100,100)
-            // // ctx.beginPath();
-            // // ctx.moveTo(75,75);
-            // // ctx.lineTo(125,75);
-            // // ctx.lineTo(125,125);
-            // // ctx.lineTo(75,75);
-            // // ctx.fill();
-
-            // ctx.strokeStyle = "black";
-            // ctx.fillStyle = "white";
-            // ctx.font = "36pt Impact"
-            // ctx.textAlign = "center";
-            // ctx.fillText("CANVAS MEMES!", c.width/2, 40);
-
-            // ctx.lineWidth = 3;
-            // ctx.strokeText("CANVAS MEMES!", c.width/2, 40);
-
-
-            // // ctx.fillStyle = "blue";
-            // // ctx.fillRect(100,100,100,100);
-            // // ctx.strokeRect(50,50,50,50);
-
+            function writeTitle(movieTitle){
+                var cv = document.querySelector("#c");
+                var ctx = cv.getContext("2d");
+                ctx.strokeStyle = "red";
+                ctx.fillStyle = "red";
+                ctx.font = "42pt Impact"
+                ctx.textAlign = "center";
+                ctx.fillText(movieTitle, c.width/2, c.height/2);
+            }
             function showCasaCharacter(){
                 checkStorage();
                 var cb = JSON.parse(localStorage.casa);
+                writeTitle(cb.data.movies[0].title);
                 var chars = cb.data.movies[0].actors;
                 var randomNumChar = randomNumberGenerator(1,chars.length);
 
@@ -126,6 +121,17 @@
                 }
                 return filteredList;
             }
+            function showMovie(){
+                checkStorage();
+                var cb = JSON.parse(localStorage.casa);
+                document.getElementById("moviePoster").src = cb.data.movies.urlPoster;
+                var rD = cb.data.movies[0].releaseDate;
+                var fmtReleaseDate = rD.getDate() + "/" + (rD.getMonth()+1) + "/" + rD.getFullYear();
+                document.getElementById("movieRelease").innerHTML = fmtReleaseDate;
+                document.getElementById("movieRuntime").innerHTML = db.data.movies[0].runtime;
+                document.getElementById("movieDirectors").innerHTML = cb.data.movies[0].directors[0].name;
+                document.getElementById("movieSimplePlot").innerHTML = cb.data.movies[0].simplePlot;
+            }
             function checkStorage(){
                 if (localStorage.getItem("casa") === null) {
                     // give a red light
@@ -158,6 +164,7 @@
                 localStorage.clear();
             }
             window.onload = showCasaCharacter();
+            // window.onload = writeTitle("CASABLANCA");
         </script>
     </body>
 </html>
