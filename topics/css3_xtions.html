@@ -86,6 +86,7 @@
                 checkStorage();
                 var cb = JSON.parse(localStorage.casa);
                 writeTitle(cb.data.movies[0].title);
+                showMovie();
                 var chars = cb.data.movies[0].actors;
                 var randomNumChar = randomNumberGenerator(1,chars.length);
 
