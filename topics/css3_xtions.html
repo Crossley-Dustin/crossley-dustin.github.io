@@ -5,19 +5,61 @@
         <title>Dustin's CSS3 Transitions, Transformations, and Animations</title>
         <link rel="stylesheet" type="text/css" href="topic_css/topic_layout.css">
         <style>
-
+            .flip-container {
+                perspective: 1000px;
+            }
+            .flip-container:hover .flipper, .flip-container.hover .flipper{
+                transform: rotateY(180deg);
+            }
+            .flip-container, .front, .back {
+                width: 320px;
+                height: 480px;
+            }
+            .flipper {
+                transition: 0.6s;
+                transform-style: preserve-3d;
+                position: relative;
+            }
+            .front, .back {
+                backface-visibility: hidden;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            .front {
+                z-index: 2;
+            }
+            .back {
+                transform: rotateY(180deg);
+            }
         </style>
     </head>
     <body>
         <main>
 			<section id="section1">
-				<h1>Casablanca</h1>
+				<h1>Casablanca Time!</h1>
                 <!-- <button onclick="showCasaCharacter()">Load File</button> -->
-                <button onclick="clearLocalStorage()">Clear Storage</button>
-                <h2 id="randomCharacter"></h2>
-                <div class="col-6"><img id="charImg"><p id="charQuote"></p></div>
+
+
+
+                <div class="flip-container" ontouchstart="this.classlist.toggle('hover');">
+                    <div class="flipper">
+                        <div class="front">
+                            <!-- front content -->
+                            <!--<p>Hello World Front!</p> -->
+                            <h2 id="randomCharacter"></h2>
+                            <div class="col-6"><img id="charImg"></div>
+                        </div>
+                        <div class="back">
+                            <!-- back content -->
+                            <p>Hello World Back!</p>
+                            <p id="charQuote"></p>
+                        </div>
+                    </div>
+                </div>
 			</section>
             <!-- <canvas id="c" width="800" height="200"></canvas> -->
+            <button onclick="clearLocalStorage()">Clear Storage</button>
         </main>
 
         <script>
