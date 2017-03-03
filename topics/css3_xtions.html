@@ -9,6 +9,10 @@
                 width: 320px;
                 height: 120px;
             }
+            #moviePoster {
+                max-height: 100%;
+                width: auto;
+            }
             .flip-container {
                 perspective: 1000px;
             }
@@ -51,12 +55,12 @@
                     <div class="flipper">
                         <div class="front">
                             <!-- front content -->
-                            <p>Hello World Front!</p>
+                            <!-- <p>Hello World Front!</p> -->
                             <img id="moviePoster">
                         </div>
                         <div class="back">
                             <!-- back content -->
-                            <p>Hello World Back!</p>
+                            <!-- <p>Hello World Back!</p> -->
                             <p id="movieRelease"></p>
                             <p id="movieRuntime"></p>
                             <p id="movieDirectors"></p>
@@ -128,10 +132,10 @@
                 document.getElementById("moviePoster").src = cb.data.movies[0].urlPoster;
                 var rD = cb.data.movies[0].releaseDate;
                 var fmtReleaseDate = rD.substring(4,6) + "/" + rD.substring(6,8) + "/" + rD.substring(0,4);
-                document.getElementById("movieRelease").innerHTML = fmtReleaseDate;
-                document.getElementById("movieRuntime").innerHTML = cb.data.movies[0].runtime;
-                document.getElementById("movieDirectors").innerHTML = cb.data.movies[0].directors[0].name;
-                document.getElementById("movieSimplePlot").innerHTML = cb.data.movies[0].simplePlot;
+                document.getElementById("movieRelease").innerHTML = "Release Date: " +fmtReleaseDate;
+                document.getElementById("movieRuntime").innerHTML = "Run time: " + cb.data.movies[0].runtime;
+                document.getElementById("movieDirectors").innerHTML = "Director: " + cb.data.movies[0].directors[0].name;
+                document.getElementById("movieSimplePlot").innerHTML = "Plot: " + cb.data.movies[0].simplePlot;
             }
             function checkStorage(){
                 if (localStorage.getItem("casa") === null) {
