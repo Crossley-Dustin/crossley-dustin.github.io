@@ -15,16 +15,14 @@
         </main>
         <script>
             function doSearch(){
-                //
-                //alert("Hello World");
                 var searchText = document.getElementById("productSearch").value;
-                alert(searchText);
+                //alert(searchText);
                 callWallyAPI(searchText);
                 var searchResult = JSON.parse(localStorage.searchResult);
             }
             function callWallyAPI(searchText){
                 var xhr = new XMLHttpRequest();
-                var url = "http://api.walmartlabs.com/v1/search?";
+                var url = "https://api.walmartlabs.com/v1/search?";
                 var apiKey = "apiKey=kmtpdvh9ta3bnnzfepjw66w9";
                 var query = "&query=" + searchText;
                 var searchQuery = url + apiKey + query;
