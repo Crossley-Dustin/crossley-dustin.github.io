@@ -39,10 +39,11 @@
             // }
             function callWallyAPI(searchText){
                 var xhr = new XMLHttpRequest();
-                var url = "https://api.walmartlabs.com/v1/search?";
+                var searchURL = "https://stewartethan-portfolio.herokuapp.com/walmart?"
+                // var url = "https://api.walmartlabs.com/v1/search?";
                 var apiKey = "apiKey=kmtpdvh9ta3bnnzfepjw66w9";
                 var query = "&query=" + searchText;
-                var searchQuery = url + apiKey + query;
+                var searchQuery = searchURL + apiKey + query;
                 xhr.open("GET",searchQuery,true);
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == 4 && xhr.status == 200) {
