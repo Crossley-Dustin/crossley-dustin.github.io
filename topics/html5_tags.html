@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Dustin's HTML5 Example</title>
+        <link rel="stylesheet" type="text/css" href="topic_css/topic_layout.css">
+        <style>
+            #c {
+                width: 800px;
+                height: 200px;
+            }
+            .playArrow {
+                width: 0;
+                height: 0;
+                border-top: 30px solid transparent;
+                border-bottom: 30px solid transparent;
+                border-left: 30px solid blue;
+                position: absolute;
+                top: 20%;
+                left: 15%;
+                display: none;
+                z-index: 2;
+                opacity: 0.5;
+            }
+            .itemsContainer {
+                position: relative;
+            }
+            .itemsContainer:hover .playArrow{display:block}
+            .vplayer {
+                width: 640px;
+                height: 480px;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <section id="section1">
+                <canvas id="c"></canvas>
+            </section>
+            <div>
+                <div class="itemsContainer" onclick="playAudio('hunters')">
+                    <h3>Hunters</h3>
+                    <img src="images\img_pw_hunters.png">
+                    <div class = "playArrow"></div>
+                </div>
+                <div class="itemsContainer" onclick="playAudio('peter')">
+                    <h3>Peter</h3>
+                    <img src="images\img_pw_peter.png"><br>
+                    <div class = "playArrow"></div>
+                </div>
+                <div class="itemsContainer" onclick="playAudio('wolf')">
+                    <h3>Wolf</h3>
+                    <img src="images\img_pw_wolf.png" class="itemsContainer" onclick="playAudio('wolf')">
+                    <div class = "playArrow"></div>
+                </div>
+            </div>
+
+            <div>
+                <audio id="hunters" display="none" preload="none" src="audio\audio_pw_hunters.ogg" ></audio>
+                <audio id="peter" display="none" preload="none" src="audio\audio_pw_peter.ogg" ></audio>
+                <audio id="wolf" display="none" preload="none" src="audio\audio_pw_wolf.ogg" ></audio>
+            </div>
+                <video controls class=vplayer id="vid1" onloadstart="this.volume=0.5">
+                    <source src = "video\cassini.ogv">
+                </video>
+        </main>
+
+        <script>
+             function writeTitle(){
+                var cv = document.querySelector("#c");
+                var ctx = cv.getContext("2d");
+                ctx.strokeStyle = "orange";
+                ctx.fillStyle = "orange";
+                ctx.font = "34pt Impact"
+                ctx.textAlign = "center";
+                ctx.fillText("Peter & the Wolf", c.width/2, c.height/2);
+            }
+            function playAudio(character){
+                var audioElem = "";
+                switch (character){
+                    case "hunters":
+                        audioElem = document.getElementById("hunters");
+                        break;
+                    case "peter":
+                        audioElem = document.getElementById("peter");
+                        break;
+                    case "wolf":
+                        audioElem = document.getElementById("wolf");
+                }
+                audioElem.play();
+            }
+            window.onload = writeTitle();
+        </script>
+    </body>
+</html>
